@@ -1,10 +1,3 @@
-.profile-img{
-	display: inline-block;
-	width: 200px;
-	vertical-align: top;
-	border: solid 1px #454545;
-}
-
 .profile-info{
 	display: inline-block;
 	width: calc(100% - 205px);
@@ -17,5 +10,14 @@
 }
 .gender{
 	display: inline-block;
-	margin-left: 50px;
+	margin-left: 100px;
+}
+.message-item-wrapper{
+	margin: 20px 0;
+	border: solid 1px #454545;
+	height: 100px;
+}
+.delete-message{
+	cursor: pointer;
+	margin-right: 10px;
 }

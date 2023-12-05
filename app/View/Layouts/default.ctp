@@ -45,6 +45,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->script('https://code.jquery.com/ui/1.12.1/jquery-ui.js');
 		echo $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js');
 
+
 	?>
 </head>
 <body>

@@ -26,6 +26,11 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+
+	// app/Config/routes.php
+
+	Router::connect('/messages/reply/:toId/:fromId', array('controller' => 'messages', 'action' => 'replyMessage'));
+
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */

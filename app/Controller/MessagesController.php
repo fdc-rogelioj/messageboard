@@ -1,16 +1,24 @@
 <?php
 
 class MessagesController extends AppController {
-    public $components = array('Paginator');
-    public $limit = 10;
-	public function messageList()
-	{
+  public $components = array('Paginator');
+
+  public $uses = array('Message', 'User');
+public function beforeFilter() {
+  parent::beforeFilter();
+
+  $this->paginate = array(
+      'limit' => 10, // Number of items per page
+      'order' => array('Message.created' => 'desc') // Order by a specific field
+  );
+}
+
+  public function messageList() {
         $messages = $this->paginate('Message');
         $this->set(compact('messages'));
 	}
 
-  public function newMessage()
-	{
+  public function newMessage() {
         if ($this->request->is('post')) {
             $this->request->data['Message']['from_id'] = $this->Auth->user('id');
             if ($this->Message->save($this->request->data)) {
@@ -18,32 +26,19 @@ class MessagesController extends AppController {
             }
         }
 	}
-  public function moreMessageList($count = 0) {
-    $userID = $this->Auth->user('id');
+  public function messageDetails() {
+    $me = $this->Auth->user('id');
 
-    $this->paginate = array('Message' => array(
-        'conditions' => array(
-            "Message.id IN
-            (SELECT max(id)
-                FROM messages
-                WHERE
-                    (Message.from_id = {$userID}) ||
-                    (Message.to_id = {$userID})
-                GROUP BY 
-                    IF (from_id = {$userID}, to_id, from_id),
-                    IF (from_id != {$userID}, to_id, from_id))"
-        ),
-        'order' => 'created DESC',
-        'limit' => $this->limit,
-        'offset' => $count,
-    ));
+    $this->loadModel('User');
+    $user = $this->User->read('id');
+  
+    $messages = $this->paginate('Message');
+    $this->set(compact('user', 'messages'));
+  }
 
-    if ($this->request->is('ajax')) {
-        $messages = $this->paginate('Message');
-        $this->layout = false;
-        $this->set(compact('messages'));
-    }
+  public function deleteMessage() {
+      $this->Message->delete($this->request->data['id']);
+      exit;
+  }
+  
 }
-
-}
-

@@ -23,12 +23,7 @@ class User extends AppModel {
             'compare' => array(
                 'rule' => array('compare_password'),
                 'message' => 'Password does not match!'
-            ),
-            'minPass' => array(
-            'rule' => array('minLength', 6),
-            'message' => 'Password must be at least 6 characters long.'),
-
-            
+            )
         ),
         'confirm_password' => array(
             'compare' => array(
